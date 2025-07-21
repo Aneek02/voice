@@ -23,6 +23,9 @@ voice_cloner/outputs/
 *.mp3
 *.log
 
+# Large binaries
+*.jar
+
 # VS Code settings (optional)
 .vscode/
 
@@ -31,7 +34,6 @@ testInputs/
 *.txt
 *.json
 
-# Editor & OS junk
-.vscode/
-.DS_Store
-Thumbs.db 
+# Build artifacts
+dist/
+build/
