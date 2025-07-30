@@ -4,16 +4,57 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Python
+# Python Virtual Environments
 venv/
+tts_venv/
+.venv/
+env/
+*.venv
+
+# Python
 __pycache__/
+*.py[cod]
+*$py.class
 *.pyc
+*.pyo
+*.pyd
+.Python
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
 
 # Environment variables
 .env
+.env.local
+.env.*.local
 
 # OS files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
 # Audio uploads and outputs
@@ -23,8 +64,18 @@ voice_cloner/outputs/
 *.mp3
 *.log
 
-# Large binaries
+# Large ML/AI model files and binaries
+*.pth
+*.pkl
+*.bin
+*.safetensors
+*.onnx
+*.h5
+*.hdf5
 *.jar
+*.dll
+*.so
+*.dylib
 
 # VS Code settings (optional)
 .vscode/
@@ -37,3 +88,35 @@ testInputs/
 # Build artifacts
 dist/
 build/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# IDEs
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
