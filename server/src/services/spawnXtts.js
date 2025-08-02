@@ -3,7 +3,7 @@ import { spawn } from "child_process";
 
 export const synthesizeParagraph = (text, speakerId, outPath) =>
   new Promise((resolve, reject) => {
-    const py = spawn(process.env.XTTS_PYTHON || "python", ["tts_cli.py"], {
+  const py = spawn(process.env.XTTS_PYTHON || "D:\\voiceFlow2.0\\server\\tts_venv\\Scripts\\python.exe", ["tts_cli.py"], {
       cwd: "./python/xtts_api",
       env: {
         ...process.env,

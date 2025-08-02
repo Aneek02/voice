@@ -170,6 +170,8 @@ export const streamAudio = async (req, res) => {
   }
 };
 
+// src/controllers/voiceController.js
+
 export const cloneVoiceSample = async (req, res) => {
   try {
     const { passage, voiceMap } = req.body;
@@ -209,15 +211,22 @@ export const cloneVoiceSample = async (req, res) => {
       console.warn("⚠️ voiceMap not valid JSON, using default EN");
     }
 
-    // 5. Run Python script with the new temp voice file
-    const pyExe = "D:\\voiceFlow2.0\\server\\venv\\Scripts\\python.exe";
+    // 5. Run Python script with the CORRECT environment settings
+    const pyExe = process.env.XTTS_PYTHON || "D:\\voiceFlow2.0\\server\\tts_venv\\Scripts\\python.exe";
     const pythonProcess = spawn(pyExe, [
-      path.join(baseDir, "generate_audio.py"),
-      path.resolve(tempPassagePath),
-      path.resolve(tempVoicePath), // Now uses the GridFS-sourced temp file
-      path.resolve(outputPath),
-      voiceMap ? JSON.stringify(voiceMapParsed) : "",
-    ]);
+        path.join(baseDir, "generate_audio.py"),
+        path.resolve(tempPassagePath),
+        path.resolve(tempVoicePath),
+        path.resolve(outputPath),
+        voiceMap ? JSON.stringify(voiceMapParsed) : "",
+    ], {
+        // THIS IS THE CORRECTED BLOCK
+        env: {
+            ...process.env, // Inherit existing environment variables
+            "PYTHONIOENCODING": "utf-8", // Force Python to use UTF-8
+            "PATH": `D:\\voiceFlow2.0\\server\\tts_venv\\Scripts;${process.env.PATH}`
+        }
+    });
 
     pythonProcess.stdout.on("data", (data) => console.log(`stdout: ${data.toString()}`));
     pythonProcess.stderr.on("data", (data) => console.error(`stderr: ${data.toString()}`));
@@ -243,7 +252,7 @@ export const cloneVoiceSample = async (req, res) => {
       await newSample.save();
       return res.status(201).json({
         message: "Voice cloned successfully",
-        audioUrl: `/voice/${outputFolder}/final_output.wav`, // For demo; consider GridFS for production
+        audioUrl: `/voice/${outputFolder}/final_output.wav`,
         sample: newSample,
       });
     });
